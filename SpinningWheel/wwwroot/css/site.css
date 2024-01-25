@@ -17,8 +17,49 @@ html {
   min-height: 100%;
 }
 
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: orange;
+}
 
-/**/
+/* Background */
+@media (min-width: 1024.05px) {
+   
+}
+
+/* Home */
+.logo-gs img {
+    width: 100%;
+    height: auto;
+}
+
+.title-CRP p {
+    font-size: 40px;
+}
+
+.startBtn button {
+    background-color: white;
+    border-radius: 50px;
+    text-align: center;
+}
+
+/* Video Watching */
+.video-thumbnail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    margin: 20px auto;
+}
+
+    .video-thumbnail img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 100%;
+    }
+
+
+/* Spinning Wheel */
 
 @import url('https:fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
 
