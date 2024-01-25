@@ -1,17 +1,29 @@
-﻿<div class="logo-gs">
-    <img src="~/images/GS Hitam 1.png"/>
+﻿<div>
+    <div class="logo-gs">
+        <img src="~/images/GS Hitam 1.png" />
+    </div>
+
+    <div class="title-CRP">
+        <p>Cost Reduction Program (CRP)</p>
+    </div>
+
+    <div class="startBtn">
+        <div>
+            <input id="redirect" type="submit" value="PRESS TO START" class="btn btn-default" />
+        </div>
+    </div>
+
+    <div class="tiktok-screen">
+        <video>
+        </video>
+    </div>
 </div>
 
-<div class="title-CRP">
-    <p>Cost Reduction Program (CRP)</p>
-</div>
-
-<div class="startBtn">
-    <button>
-        PRESS TO START
-    </button>
-</di>
-
-<div class="tiktok-screen">
-    
-</div>
+<script>
+    $(function(){
+      $("#redirect").click(function (e) {
+         e.preventDefault();
+         document.location = '@Url.Action("Index","EnterName")';
+      });
+    });
+</script>
