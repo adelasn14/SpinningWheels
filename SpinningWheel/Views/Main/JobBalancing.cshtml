@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "_MainItemLayout";
+}
+
+<div class="main-item-container">
+    <div id="logo-gs">
+        <img src="~/images/Logo-GS Hitam.png" />
+    </div>
+
+    <div id="main-item-text">
+        <label>Job Balancing</label>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+
+    <div>
+        <div id="ppt-watching-screen"></div>
+        <div id="video-watching-screen"></div>
+    </div>
+
+    <div id="backBtn">
+        <input type="submit" value="Back" />
+    </div>
+</div>
+
+<script>
+    $("#backBtn").click(function (e) {
+            e.preventDefault();
+            document.location = '@Url.Action("Index", "Main")';
+        });
+</script>

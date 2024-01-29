@@ -13,6 +13,7 @@ namespace SpinningWheel.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            MainController.ResetVideoWatched();
             return View();
         }
     }

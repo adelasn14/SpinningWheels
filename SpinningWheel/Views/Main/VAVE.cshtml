@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "_MainItemLayout";
+}
+
+<div class="main-item-container">
+    <div id="logo-gs">
+        <img src="~/images/Logo-GS Hitam.png" />
+    </div>
+
+    <div id="main-item-text">
+        <label>VA / VE</label>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+
+    <div>
+        <div id="ppt-watching-screen"></div>
+        <div id="video-watching-screen">
+            <video id="videoItem" src="~/videos/VideoCheck.mov" autoplay onended="updateIndex()"></video>
+        </div>
+    </div>
+
+    <div id="backBtn">
+        <input type="submit" value="Back" />
+    </div>
+</div>
+
+<script>
+    function updateIndex() {
+        $.ajax({
+            type: "POST",
+            url: "/Main/IncrementIndex",
+            success: function (result) {
+                console.log("Video Watched!");
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+            }
+        });
+    }
+
+    $(function () {
+        $("#backBtn").click(function (e) {
+            e.preventDefault();
+            pauseVideo();
+            document.location = '@Url.Action("Index", "Main")';
+        });
+    });
+
+
+    function pauseVideo() {
+        var videoItem = document.getElementById('videoItem');
+        videoItem.pause();
+    }
+</script>

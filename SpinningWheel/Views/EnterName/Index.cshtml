@@ -1,10 +1,40 @@
-﻿<div class="enterName-container">
-    <div id="inputName">
-        <label>Enter your name :</label>
-        <input placeholder="Your name" src=""/>
+﻿@{
+    Layout = "_EnterNameLayout";
+}
+
+<div class="enterName-container">
+    <div>
+        <form id="inputName">
+            <label>Enter your name :</label>
+            <input type="text" placeholder="Your name" onkeypress="checkEnter(event)" />
+            <span class="icon" onclick="handleIconClick()">
+                <i class="fas fa-search"></i>
+            </span>
+        </form>
     </div>
 
     <div id="skipBtn">
         <p>Skip</p>
     </div>
 </div>
+
+<script>
+    function checkEnter(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+
+            submitForm();
+        }
+    }
+
+    $(function(){
+      $("#skipBtn").click(function (e) {
+         e.preventDefault();
+         window.location.href = '@Url.Action("Index", "Home")';
+      });
+    });
+
+    function submitForm() {
+        window.location.href = '@Url.Action("Index", "Main")';
+    }
+</script>

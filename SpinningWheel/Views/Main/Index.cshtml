@@ -1,0 +1,108 @@
+﻿@model int
+
+@{
+    Layout = "_MainLayout";
+}
+
+<div>
+    <div class="logo-gs-hitam">
+        <img src="~/images/Logo-GS Hitam.png" />
+    </div>
+    <div class="visitor-container">
+        <div>
+            <img src="~/images/Icon-User.png" alt="user-male-circle" />
+        </div>
+        <span>128</span>
+        <span>Pengunjung</span>
+        <div>
+            <img src="~/images/Icon-End.png" alt="logout-rounded" />
+        </div>
+        <span>End</span>
+    </div>
+
+    <div class="main-content-container">
+        <label>Hello, Your Name</label>
+        <p>Cost Reduction Program (CRP)</p>
+        <div id="main-content-menu">
+            <div id="item-1" class="item">
+                <img src="~/images/Icon-User.png" />
+                <div id="text">Automation</div>
+            </div>
+            <div id="item-2" class="item">
+                <img src="~/images/Icon-User.png" />
+                <div id="text">Multisource Material</div>
+            </div>
+            <div id="item-3" class="item">
+                <img src="~/images/Icon-User.png" />
+                <div id="text">VA / VE</div>
+            </div>
+            <div id="item-4" class="item">
+                <img src="~/images/Icon-User.png" />
+                <div id="text">Reduce Rejection</div>
+            </div>
+            <div id="item-5" class="item">
+                <img src="~/images/Icon-User.png" />
+                <div id="text">Job Balancing</div>
+            </div>
+            <div id="item-6" class="item">
+                <img src="~/images/Icon-User.png" />
+                <div id="text">Increase Productivity</div>
+            </div>
+
+            <div class="watch-3-videos-container">
+                <a id="watch-3-videos-link"><span style="color: #FC6F35; font-weight: bold;">Watch 3 videos</span> to spin the wheel!</a>
+                <div id="video-watching-screen">
+                    <video id="videoMain" src="~/videos/Video-Main.mp4" autoplay onloop muted></video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var videosWatched = @Model;
+        console.log(videosWatched);
+
+        $("#item-1").click(function (e) {
+            e.preventDefault();
+            document.location = '@Url.Action("Automation", "Main")';
+        });
+
+        $("#item-2").click(function (e) {
+            e.preventDefault();
+            document.location = '@Url.Action("MultisourceMaterial", "Main")';
+        });
+
+        $("#item-3").click(function (e) {
+            e.preventDefault();
+            document.location = '@Url.Action("VAVE", "Main")';
+        });
+
+        $("#item-4").click(function (e) {
+            e.preventDefault();
+            document.location = '@Url.Action("ReduceRejection", "Main")';
+        });
+
+        $("#item-5").click(function (e) {
+            e.preventDefault();
+            document.location = '@Url.Action("JobBalancing", "Main")';
+        });
+
+        $("#item-6").click(function (e) {
+            e.preventDefault();
+            document.location = '@Url.Action("IncreaseProductivity", "Main")';
+        });
+
+        var watchLink = document.getElementById('watch-3-videos-link');
+        if (videosWatched === 3) {
+            watchLink.innerHTML = 'You‘ve unlocked the wheel! <span style="color: #FC6F35; font-weight: bold;">Spin it now!</span>';
+            watchLink.style.fontSize = '2.3vh';
+
+            // Enable the link for clicking
+            watchLink.onclick = function () {
+                document.location = '@Url.Action("Index", "SpinWheel")';
+            };
+        }
+    });
+</script>

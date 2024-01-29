@@ -1,29 +1,208 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "_SpinWheelLayout";
 }
 
-<div class="container">
-    <div class="spinBtn">Spin</div>
-    <div class="wheel">
-        <div class="number" style="--i:1;--clr:#db7093;"><span>100</span></div>
-        <div class="number" style="--i:2;--clr:#20b2aa;"><span>1</span></div>
-        <div class="number" style="--i:3;--clr:#d63e92;"><span>50</span></div>
-        <div class="number" style="--i:4;--clr:#daa520;"><span>0</span></div>
-        <div class="number" style="--i:5;--clr:#ff340f;"><span>1000</span></div>
-        <div class="number" style="--i:6;--clr:#ff7f50;"><span>10</span></div>
-        <div class="number" style="--i:7;--clr:#3cb371;"><span>5</span></div>
-        <div class="number" style="--i:8;--clr:#4169e1;"><span>20</span></div>
+<div class="spin-wheel-container">
+    <div id="logo-gs">
+        <img src="~/images/Logo-GS Hitam.png" />
+    </div>
+
+    <div id="spin-wheel-text">
+        <label>Spin the Wheel</label>
+        <p>Congratulations, you've unlocked "Spin the Wheel" where amazing prizes are up for grabs!</p>
+    </div>
+
+    <div class="wrapper">
+        <div class="container-spinwheel">
+            <canvas id="wheel"></canvas>
+            <button id="spin-btn">PRESS TO SPIN</button>
+            <span id="close">Back</span>
+            <img src="~/images/Icon-SpinWheel.png" alt="spinner-arrow" />
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="confetti">
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+            </div>
+
+            <img id="img-modal" src="~/images/Icon-SpinWheelModal.png" />
+            <div id="final-value"></div>
+            <span class="close" id="closeBtn" onclick="closeModal()"></span>
+        </div>
     </div>
 </div>
 
-<script>
-    let wheel = document.querySelector('.container .wheel');
-    let spinBtn = document.querySelector('.container .spinBtn');
-    let value = Math.ceil(Math.random() * 3600);
+<script>const wheel = document.getElementById("wheel");
+    const spinBtn = document.getElementById("spin-btn");
+    const finalValue = document.getElementById("final-value");
+    const closeBtn = document.getElementById("closeBtn");
 
-    spinBtn.onclick = function () {
-        wheel.style.transform = "rotate(" + value + "deg)";
-        value += Math.ceil(Math.random() * 3600);
+    //Object that stores values of minimum and maximum angle for a value
+    const rotationValues = [
+        //{ minDegree: 0, maxDegree: 60, value: 6 },
+        //{ minDegree: 61, maxDegree: 120, value: 5 },
+        //{ minDegree: 121, maxDegree: 180, value: "Gantungan Kunci" },
+        //{ minDegree: 181, maxDegree: 240, value: "Tumbler" },
+        //{ minDegree: 241, maxDegree: 270, value: "Pulpen" },
+        //{ minDegree: 271, maxDegree: 300, value: "Topi" },
+        //{ minDegree: 301, maxDegree: 360, value: "Topi" },
+
+        { minDegree: 0, maxDegree: 30, value: "Zonk" },
+        { minDegree: 31, maxDegree: 60, value: 6 },
+        { minDegree: 61, maxDegree: 90, value: "Zonk" },
+        { minDegree: 91, maxDegree: 120, value: 5},
+        { minDegree: 121, maxDegree: 150, value: "Zonk" },
+        { minDegree: 151, maxDegree: 180, value: "Gantungan Kunci" },
+        { minDegree: 181, maxDegree: 210, value: "Zonk" },
+        { minDegree: 211, maxDegree: 240, value: "Tumbler" },
+        { minDegree: 241, maxDegree: 270, value: "Zonk" },
+        { minDegree: 271, maxDegree: 300, value: "Pulpen" },
+        { minDegree: 301, maxDegree: 315, value: "Zonk" },
+        { minDegree: 316, maxDegree: 330, value: "Topi" },
+        { minDegree: 331, maxDegree: 360, value: "Zonk" }
+
+    ];
+    //Size of each piece
+    //const data = [16, 16, 16, 16, 16, 16];
+    const data = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
+
+    //background color for each piece
+    var pieColors = [
+        "#ffbd59",
+        "#ffde5a",
+    ];
+    //Create chart
+    let myChart = new Chart(wheel, {
+        //Plugin for displaying text on pie chart
+        plugins: [ChartDataLabels],
+        //Chart Type Pie
+        type: "pie",
+        data: {
+            //Labels(values which are to be displayed on chart)
+            //labels: ["Topi", "Pulpen", "Tumbler", "Gantungan Kunci", 5, 6],
+            labels: ["Topi", "Zonk", "Pulpen", "Zonk", "Tumbler", "Zonk", "Gantungan Kunci", "Zonk", 5, "Zonk", 6, "Zonk"],
+            //Settings for dataset/pie
+            datasets: [
+                {
+                    backgroundColor: pieColors,
+                    data: data,
+                    borderColor: ['red'],
+                    borderWidth: 20,
+                },
+            ],
+        },
+        options: {
+            //Responsive chart
+            responsive: true,
+            animation: { duration: 0 },
+            plugins: {
+                //hide tooltip and legend
+                tooltip: false,
+                legend: {
+                    display: false,
+                },
+                //display labels inside pie chart
+                datalabels: {
+                    padding: 10,
+                    rotation: (context) =>
+                        context.dataIndex * (360 / context.chart.data.labels.length) +
+                        360 / context.chart.data.labels.length / 2 +
+                        270 +
+                        context.chart.options.rotation,
+                    color: "#000000",
+                    formatter: (_, context) => context.chart.data.labels[context.dataIndex],
+                    font: {
+                        family: "Rubik", // Replace 'Your Desired Font' with the actual font name
+                        size: 70,
+                        weight: "bold", // You can use 'normal', 'bold', etc.
+                    },
+                },
+            },
+        },
+    });
+    //display value based on the randomAngle
+    const valueGenerator = (angleValue) => {
+        for (let i of rotationValues) {
+            //if the angleValue is between min and max then display it
+            if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
+                if (i.value == "Zonk") {
+                    finalValue.innerHTML = `<p>Oops!</br></br></br></br></br></br> You got: </br> <span style="color: #FD226A;">${i.value}</span></p>`;
+                    closeBtn.innerHTML = `Try Again`;
+                } else {
+                    finalValue.innerHTML = `<p>CONGRATULATIONS!</br></br></br></br></br></br> You win: </br> <span style="color: #FD226A;">${i.value}</span></p>`;
+                    closeBtn.innerHTML = `Back`;
+                }
+                spinBtn.disabled = false;
+
+                openModal();
+                break;
+            }
+        }
+    };
+
+    // Function to display the modal
+    function openModal() {
+        const modal = document.getElementById('myModal');
+        modal.style.display = 'block';
     }
+
+    // Function to close the modal
+    function closeModal() {
+        const modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+    }
+
+    //Spinner count
+    let count = 0;
+    //100 rotations for animation and last rotation for result
+    let resultValue = 101;
+    //Start spinning
+    spinBtn.addEventListener("click", () => {
+        spinBtn.disabled = true;
+        //Generate random degrees to stop at
+        let randomDegree = Math.floor(Math.random() * (355 - 0 + 1) + 0);
+        //Interval for rotation animation
+        let rotationInterval = window.setInterval(() => {
+            //Set rotation for piechart
+            /*
+            Initially to make the piechart rotate faster we set resultValue to 101 so it rotates 101 degrees at a time and this reduces by 1 with every count. Eventually on last rotation we rotate by 1 degree at a time.
+            */
+            myChart.options.rotation = myChart.options.rotation + resultValue;
+            //Update chart with new value;
+            myChart.update();
+            //If rotation>360 reset it back to 0
+            if (myChart.options.rotation >= 360) {
+                count += 1;
+                resultValue -= 5;
+                myChart.options.rotation = 0;
+            } else if (count > 15 && myChart.options.rotation == randomDegree) {
+                valueGenerator(randomDegree);
+                clearInterval(rotationInterval);
+                count = 0;
+                resultValue = 101;
+            }
+        }, 10);
+    });
+
+    $(function () {
+        $("#close").click(function (e) {
+            e.preventDefault();
+            document.location = '@Url.Action("Index", "Main")';
+        });
+    });
 </script>
 

@@ -10,8 +10,16 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <None Remove="Views\EnterName\" />
+    <None Remove="Views\Main\" />
+    <None Remove="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EnterName\" />
+    <Folder Include="Views\Main\" />
+    <Folder Include="wwwroot\videos\" />
+    <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\videos\" />
   </ItemGroup>
 </Project>
