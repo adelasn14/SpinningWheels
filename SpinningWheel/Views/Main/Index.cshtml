@@ -1,8 +1,8 @@
-﻿@model int
-
-@{
+﻿@{
     Layout = "_MainLayout";
 }
+
+@model Main;
 
 <div>
     <div class="logo-gs-hitam">
@@ -12,7 +12,7 @@
         <div>
             <img src="~/images/Icon-User.png" alt="user-male-circle" />
         </div>
-        <span>128</span>
+        <span>@Model.userCount</span>
         <span>Pengunjung</span>
         <div>
             <img src="~/images/Icon-End.png" alt="logout-rounded" />
@@ -21,7 +21,7 @@
     </div>
 
     <div class="main-content-container">
-        <label>Hello, Your Name</label>
+        <label>Hello, @Model.user.Name</label>
         <p>Cost Reduction Program (CRP)</p>
         <div id="main-content-menu">
             <div id="item-1" class="item">
@@ -61,7 +61,7 @@
 
 <script>
     $(function () {
-        var videosWatched = @Model;
+        var videosWatched = @Model.videoWatched;
         console.log(videosWatched);
 
         $("#item-1").click(function (e) {
@@ -95,7 +95,7 @@
         });
 
         var watchLink = document.getElementById('watch-3-videos-link');
-        if (videosWatched === 3) {
+        if (videosWatched >= 3) {
             watchLink.innerHTML = 'You‘ve unlocked the wheel! <span style="color: #FC6F35; font-weight: bold;">Spin it now!</span>';
             watchLink.style.fontSize = '2.3vh';
 
@@ -105,4 +105,24 @@
             };
         }
     });
+
+    let idleTime = 0;
+    const idleTimeout = 300; // 5 minutes in seconds
+    const homePageUrl = "/Home/Index"; // Adjust the URL of your home page
+
+    const idleInterval = setInterval(timerIncrement, 1000);
+
+    document.addEventListener('mousemove', resetIdleTime);
+    document.addEventListener('keydown', resetIdleTime);
+
+    function timerIncrement() {
+        idleTime++;
+        if (idleTime >= idleTimeout) {
+            window.location.href = homePageUrl;
+        }
+    }
+
+    function resetIdleTime() {
+        idleTime = 0;
+    }
 </script>

@@ -1,11 +1,15 @@
-﻿using System;
-namespace SpinningWheel.Data
+﻿using Microsoft.EntityFrameworkCore;
+using SpinningWheel.Models;
+using System;
+
+namespace SpinningWheel.Data;
+
+public class SpinWheelDbContext : DbContext
 {
-	public class SpinWheelDbContext
-	{
-		public SpinWheelDbContext()
-		{
-		}
-	}
+    public SpinWheelDbContext(DbContextOptions<SpinWheelDbContext> options)
+        : base(options)
+    {
+    }
+    public DbSet<User> User { get; set; } = default!;
 }
 

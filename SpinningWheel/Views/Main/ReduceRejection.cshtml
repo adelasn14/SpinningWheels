@@ -14,7 +14,9 @@
 
     <div>
         <div id="ppt-watching-screen"></div>
-        <div id="video-watching-screen"></div>
+        <div id="video-watching-screen">
+            <video id="videoItem" src="~/videos/VideoCheck.mov" autoplay onended="updateIndex()"></video>
+        </div>
     </div>
 
     <div id="backBtn">
@@ -23,8 +25,49 @@
 </div>
 
 <script>
-    $("#backBtn").click(function (e) {
+    function updateIndex() {
+        $.ajax({
+            type: "POST",
+            url: "/Main/IncrementIndex",
+            success: function (result) {
+                console.log("Video Watched!");
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+            }
+        });
+    }
+
+    $(function () {
+        $("#backBtn").click(function (e) {
             e.preventDefault();
+            pauseVideo();
             document.location = '@Url.Action("Index", "Main")';
         });
+
+        function pauseVideo() {
+            var videoItem = document.getElementById("videoItem");
+            videoItem.pause();
+        }
+    });
+
+    let idleTime = 0;
+    const idleTimeout = 300; // 5 minutes in seconds
+    const homePageUrl = "/Home/Index"; // Adjust the URL of your home page
+
+    const idleInterval = setInterval(timerIncrement, 1000);
+
+    document.addEventListener('mousemove', resetIdleTime);
+    document.addEventListener('keydown', resetIdleTime);
+
+    function timerIncrement() {
+        idleTime++;
+        if (idleTime >= idleTimeout) {
+            window.location.href = homePageUrl;
+        }
+    }
+
+    function resetIdleTime() {
+        idleTime = 0;
+    }
 </script>

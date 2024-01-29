@@ -44,11 +44,30 @@
             pauseVideo();
             document.location = '@Url.Action("Index", "Main")';
         });
+
+        function pauseVideo() {
+            var videoItem = document.getElementById("videoItem");
+            videoItem.pause();
+        }
     });
 
+    let idleTime = 0;
+    const idleTimeout = 300; // 5 minutes in seconds
+    const homePageUrl = "/Home/Index"; // Adjust the URL of your home page
 
-    function pauseVideo() {
-        var videoItem = document.getElementById('videoItem');
-        videoItem.pause();
+    const idleInterval = setInterval(timerIncrement, 1000);
+
+    document.addEventListener('mousemove', resetIdleTime);
+    document.addEventListener('keydown', resetIdleTime);
+
+    function timerIncrement() {
+        idleTime++;
+        if (idleTime >= idleTimeout) {
+            window.location.href = homePageUrl;
+        }
+    }
+
+    function resetIdleTime() {
+        idleTime = 0;
     }
 </script>
