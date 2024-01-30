@@ -7,26 +7,43 @@
 <div class="enterName-container">
     <div>
         <form id="inputName" asp-controller="EnterName" asp-action="Index" method="post">
-            <label>Enter your name :</label>
-            <input type="text" placeholder="Your name" asp-for="Name" onkeypress="checkEnter(event)" />
+            <label class="hidden" id="enter-your-name">Enter your name :</label>
+            <input type="text" placeholder="Your name" asp-for="Name"/>
             <span class="icon" onclick="handleIconClick()">
-                <i class="fas fa-search"></i>
+                <img id="imgNext" class="hidden" src="~/images/Icon-Right-Arrow.png" />
             </span>
         </form>
     </div>
 
-    <div id="skipBtn">
+    <div class="hidden" id="skipBtn">
         <p>Skip</p>
     </div>
 </div>
 
 <script>
-    function checkEnter(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
+    setTimeout(function () {
+        document.getElementById('enter-your-name').classList.remove('hidden');
+        document.getElementById('skipBtn').classList.remove('hidden');
+        document.getElementById('imgNext').classList.remove('hidden');
+
+            document.getElementById('enter-your-name').classList.add('entrance');
+            document.getElementById('skipBtn').classList.add('entrance');
+            document.getElementById('imgNext').classList.add('entrance');
+
+        setTimeout(function () {
+            document.getElementById('imgNext').classList.add('blinking');
+        }, 800);
+
+    }, 1000);
+
+    function handleIconClick() {
+        setTimeout(function () {
+            document.getElementById('enter-your-name').classList.add('exit');
+            document.getElementById('imgNext').classList.add('exit');
+            document.getElementById('skipBtn').classList.add('exit');
 
             submitForm();
-        }
+        }, 1000);
     }
 
     $(function(){
@@ -40,6 +57,7 @@
         $("#inputName").submit();
     }
 
+    // Idle Timeout
     let idleTime = 0;
     const idleTimeout = 300; // 5 minutes in seconds
     const homePageUrl = "/Home/Index"; // Adjust the URL of your home page

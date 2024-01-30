@@ -20,7 +20,7 @@
     </div>
 
     <div id="backBtn">
-        <input type="submit" value="Back" />
+        <input id="backBtnText" type="submit" value="Back" />
     </div>
 </div>
 
@@ -39,13 +39,21 @@
     }
 
     $(function () {
+        document.getElementById('backBtn').classList.add('pulse');
+
         $("#backBtn").click(function (e) {
             e.preventDefault();
             pauseVideo();
-            document.location = '@Url.Action("Index", "Main")';
+
+            document.getElementById('backBtn').classList.remove('pulse');
+
+            setTimeout(function () {
+                document.getElementById('backBtn').classList.add('exit');
+
+                document.location = '@Url.Action("Index", "Main")';
+            }, 700);
         });
     });
-
 
     function pauseVideo() {
         var videoItem = document.getElementById('videoItem');

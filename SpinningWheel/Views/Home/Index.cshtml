@@ -3,15 +3,15 @@
 }
 
 <div class="home-container">
-    <div class="logo-gs-putih">
+    <div class="logo-gs-putih" id="logo-gs-putih">
         <img src="~/images/Logo-GS Putih.png" />
     </div>
 
-    <div class="title-CRP">
+    <div class="title-CRP" id="title-CRP">
         <p>Cost Reduction Program (CRP)</p>
     </div>
 
-    <div class="startBtn">
+    <div class="startBtn" id="startBtn">
         <input id="redirect" type="submit" value="PRESS TO START" class="btn btn-default" />
     </div>
 
@@ -21,10 +21,17 @@
 </div>
 
 <script>
-    $(function(){
-      $("#redirect").click(function (e) {
-         e.preventDefault();
-         document.location = '@Url.Action("Index","EnterName")';
-      });
+    $(function () {
+        $("#redirect").click(function (e) {
+            e.preventDefault();
+
+            document.getElementById('logo-gs-putih').classList.add('exit');
+            document.getElementById('title-CRP').classList.add('exit');
+            document.getElementById('startBtn').classList.add('exit');
+
+            setTimeout(function () {
+                document.location = '@Url.Action("Index", "EnterName")';
+            }, 1000);
+        });
     });
 </script>
