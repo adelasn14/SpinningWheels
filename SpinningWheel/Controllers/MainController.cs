@@ -27,8 +27,11 @@ namespace SpinningWheel.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var lastUser = _context.User.OrderByDescending(u => u.Id).FirstOrDefault();
-            var userCount = _context.User.Count();
+
+            DateTime today = DateTime.Today;
+
+            var lastUser = HttpContext.Session.GetString("Name") ?? "There" ;
+            int userCountToday = _context.User.Count(u => u.CreatedDateTime == today);
 
             var main = new Main
             {
@@ -85,6 +88,14 @@ namespace SpinningWheel.Controllers
         public IActionResult IncreaseProductivity()
         {
             return View();
+        }
+
+        public ActionResult End()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("Name");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -12,42 +12,42 @@
         <div>
             <img src="~/images/Icon-User.png" alt="user-male-circle" />
         </div>
-        <span>
+        <a>
             @Model.userCount
-        </span>
-        <span>Pengunjung</span>
+        </a>
+        <a>Pengunjung</a>
         <div>
             <img src="~/images/Icon-End.png" alt="logout-rounded" />
         </div>
-        <span>End</span>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="End">End</a>
     </div>
 
     <div class="main-content-container">
-        <label>HELLO, @Model.user.Name.ToString().ToUpper()</label>
+        <label>HELLO, @Model.user.ToString().ToUpper()</label>
         <p>Cost Reduction Program (CRP)</p>
         <div id="main-content-menu">
             <div id="item-1" class="item">
-                <img src="~/images/Icon-Automation.png" />
+                <img src="~/images/Icon-1.png" />
                 <div id="text">Automation</div>
             </div>
             <div id="item-2" class="item">
-                <img src="~/images/Icon-Multisource.png" />
+                <img src="~/images/Icon-2.png" />
                 <div id="text">Multisource Material</div>
             </div>
             <div id="item-3" class="item">
-                <img src="~/images/Icon-VAVE.png" />
+                <img src="~/images/Icon-3.png" />
                 <div id="text">VA / VE</div>
             </div>
             <div id="item-4" class="item">
-                <img src="~/images/Icon-Reduce.png" />
+                <img src="~/images/Icon-4.png" />
                 <div id="text">Reduce Rejection</div>
             </div>
             <div id="item-5" class="item">
-                <img src="~/images/Icon-Job.png" />
+                <img src="~/images/Icon-5.png" />
                 <div id="text">Job Balancing</div>
             </div>
             <div id="item-6" class="item">
-                <img src="~/images/Icon-Increase.png" />
+                <img src="~/images/Icon-6.png" />
                 <div id="text">Increase Productivity</div>
             </div>
 
@@ -97,7 +97,13 @@
         });
 
         var watchLink = document.getElementById('watch-3-videos-link');
-        if (videosWatched >= 3) {
+        if (videosWatched == 1) {
+            watchLink.innerHTML = '<span style="color: #FC6F35; font-weight: bold;"> Watch 2 videos </span> to spin the wheel!';
+        }
+        else if (videosWatched == 2) {
+            watchLink.innerHTML = '<span style="color: #FC6F35; font-weight: bold;"> Watch 1 video </span> to spin the wheel!';
+        }
+        else if (videosWatched >= 3) {
             watchLink.innerHTML = 'You‘ve unlocked the wheel! <span style="color: #FC6F35; font-weight: bold;">Spin it now!</span>';
             watchLink.style.fontSize = '2.3vh';
 

@@ -10,7 +10,7 @@ namespace SpinningWheel.Models
 
 	public class Main
 	{
-		public User user { get; set; }
+		public string user { get; set; }
 		public int userCount { get; set; }
 		public int videoWatched { get; set; }
     }

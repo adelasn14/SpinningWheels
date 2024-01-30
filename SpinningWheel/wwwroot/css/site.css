@@ -15,6 +15,7 @@
         height: 100%;
         text-align: center;
     }
+
         body#home-body {
             background-image: url('/images/Bg-Home.png');
             background-repeat: no-repeat;
@@ -148,7 +149,7 @@
             margin-left: 1vh;
         }
 
-        .visitor-container span {
+        .visitor-container a {
             font-size: 60px;
             margin-left: 22px;
         }
@@ -199,6 +200,13 @@
                     height: 10vh;
                     border-radius: 50%;
                     object-fit: cover;
+                    background: radial-gradient(circle at 50% 50%, #FD226A, #FC7333);
+                    padding: 1vh;
+                    box-shadow: 0 0 0 1vh rgba(242, 210, 220, 0.5);
+                }
+
+                .main-content-container #main-content-menu #text {
+                    margin-top: 1vh;
                 }
 
     .watch-3-videos-container {
@@ -366,7 +374,7 @@
     .icon {
         position: absolute;
         top: 55.4vh;
-        left: 49.6vh;
+        left: 43.6vh;
         transform: translateY(-50%);
         cursor: pointer;
         color: #000000;
@@ -540,7 +548,7 @@
         width: 20vh;
         position: absolute;
         top: 23%;
-        left: 32%;
+        left: 28%;
     }
 
 
@@ -550,7 +558,7 @@
     width: 12vh;
     position: absolute;
     top: 45vh;
-    left: 39%;
+    left: 37%;
     background-color: transparent;
     border-radius: 5vh;
     padding: 1vh;

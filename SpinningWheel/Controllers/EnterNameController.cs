@@ -24,11 +24,11 @@ namespace SpinningWheel.Controllers
         [HttpPost]
         public async Task<IActionResult> Index([Bind("Id, Name, CreatedDateTime")] User user)
         {
-
             user.CreatedDateTime = DateTime.Now;
 
             _context.Add(user);
             await _context.SaveChangesAsync();
+            HttpContext.Session.SetString("Name", user.Name);
 
             MainController.ResetVideoWatched();
 

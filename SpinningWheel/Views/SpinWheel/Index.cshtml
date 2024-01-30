@@ -46,7 +46,8 @@
     </div>
 </div>
 
-<script>const wheel = document.getElementById("wheel");
+<script>
+    const wheel = document.getElementById("wheel");
     const spinBtn = document.getElementById("spin-btn");
     const finalValue = document.getElementById("final-value");
     const closeBtn = document.getElementById("closeBtn");
@@ -102,6 +103,8 @@
                     data: data,
                     borderColor: ['red'],
                     borderWidth: 20,
+                    borderCapStyle: 'butt',
+                    borderJoinStyle: 'miter',
                 },
             ],
         },
@@ -134,25 +137,28 @@
             },
         },
     });
-    //display value based on the randomAngle
+
     const valueGenerator = (angleValue) => {
         for (let i of rotationValues) {
-            //if the angleValue is between min and max then display it
+            // if the angleValue is between min and max then display it
             if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
-                if (i.value == "Zonk") {
-                    finalValue.innerHTML = `<p>Oops!</br></br></br></br></br></br> You got: </br> <span style="color: #FD226A;">${i.value}</span></p>`;
-                    closeBtn.innerHTML = `Try Again`;
-                } else {
-                    finalValue.innerHTML = `<p>CONGRATULATIONS!</br></br></br></br></br></br> You win: </br> <span style="color: #FD226A;">${i.value}</span></p>`;
-                    closeBtn.innerHTML = `Back`;
-                }
-                spinBtn.disabled = false;
+                setTimeout(function () {
+                    if (i.value == "Zonk") {
+                        finalValue.innerHTML = `<p>Oops!</br></br></br></br></br></br> You got: </br> <span style="color: #FD226A;">${i.value}</span></p>`;
+                        closeBtn.innerHTML = `Try Again`;
+                    } else {
+                        finalValue.innerHTML = `<p>CONGRATULATIONS!</br></br></br></br></br></br> You win: </br> <span style="color: #FD226A;">${i.value}</span></p>`;
+                        closeBtn.innerHTML = `Back`;
+                    }
+                    spinBtn.disabled = false;
 
-                openModal();
+                    openModal();
+                }, 500); // 1000 milliseconds (1 second) delay
                 break;
             }
         }
     };
+
 
     // Function to display the modal
     function openModal() {
@@ -195,7 +201,7 @@
                 count = 0;
                 resultValue = 101;
             }
-        }, 10);
+        }, 20);
     });
 
     $(function () {
