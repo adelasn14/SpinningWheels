@@ -4,27 +4,34 @@
 
 @model Main;
 
-<div>
+<div class="main-container">
     <div class="logo-gs-hitam">
         <img src="~/images/Logo-GS Hitam.png" />
     </div>
     <div class="visitor-container">
-        <div>
+        <div class="user-main">
             <img src="~/images/Icon-User.png" alt="user-male-circle" />
+            <a>
+                @Model.userCount
+            </a>
+            <a>Pengunjung</a>
         </div>
-        <a>
-            @Model.userCount
-        </a>
-        <a>Pengunjung</a>
-        <div>
+        
+        <div id="signOutLink" class="end-main">
             <img src="~/images/Icon-End.png" alt="logout-rounded" />
+            <a  class="text-dark" asp-area="" asp-controller="Main" asp-action="End">End</a>
         </div>
-        <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="End">End</a>
     </div>
+</div>
 
-    <div class="main-content-container">
-        <label>HELLO, @Model.user.ToString().ToUpper()</label>
+<div class="main-content-container">
+    <div id="title-main">
+        <div id="label-main">
+            <label>HELLO, @Model.user.ToString().ToUpper()</label>
+        </div>
         <p>Cost Reduction Program (CRP)</p>
+    </div>
+    <div id="content-main">
         <div id="main-content-menu">
             <div id="item-1" class="item">
                 <img src="~/images/Icon-1.png" />
@@ -44,18 +51,38 @@
             </div>
             <div id="item-5" class="item">
                 <img src="~/images/Icon-5.png" />
-                <div id="text">Job Balancing</div>
+                <div id="text">Increase Productivity</div>
             </div>
             <div id="item-6" class="item">
                 <img src="~/images/Icon-6.png" />
-                <div id="text">Increase Productivity</div>
+                <div id="text">Summary</div>
             </div>
+        </div>
+        <div class="watch-3-videos-container">
+            <a id="watch-3-videos-link" class="portrait" style="display:none;"><span style="color: #FC6F35; font-weight: bold;">Watch 1 videos</span> to spin the wheel!</a>
+            <div id="video-watching-screen">
+                <video id="videoMain" autoplay loop>
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                    <source src="~/videos/Video-Main.mp4" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+    </div>
 
-            <div class="watch-3-videos-container">
-                <a id="watch-3-videos-link"><span style="color: #FC6F35; font-weight: bold;">Watch 3 videos</span> to spin the wheel!</a>
-                <div id="video-watching-screen">
-                    <video id="videoMain" src="~/videos/Video-Main.mp4" autoplay onloop muted></video>
-                </div>
+    <a id="watch-3-videos-link" class="landscape" style="display:none;"><span style="color: #FC6F35; font-weight: bold;">Watch 1 video</span> to unlock spinning wheel & claim your gift!</a>
+
+    <div id="loadingOverlayItem">
+        <div id="spinner-container" class="d-flex justify-content-center align-items-center">
+            <div id="spinner-border-item" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
     </div>
@@ -88,35 +115,88 @@
 
         $("#item-5").click(function (e) {
             e.preventDefault();
-            document.location = '@Url.Action("JobBalancing", "Main")';
+            document.location = '@Url.Action("IncreaseProductivity", "Main")';
         });
 
         $("#item-6").click(function (e) {
             e.preventDefault();
-            document.location = '@Url.Action("IncreaseProductivity", "Main")';
+            document.location = '@Url.Action("Summary", "Main")';
         });
 
-        var watchLink = document.getElementById('watch-3-videos-link');
-        if (videosWatched == 1) {
-            watchLink.innerHTML = '<span style="color: #FC6F35; font-weight: bold;"> Watch 2 videos </span> to spin the wheel!';
+        var watchLinkPortrait = document.querySelector('.portrait');
+        var watchLinkLandscape = document.querySelector('.landscape');
+        if (videosWatched < 1) {
+            watchLinkPortrait.innerHTML = '<span style="color: #FC6F35; font-weight: bold;"> Watch 1 videos </span> to spin the wheel!';
+            watchLinkLandscape.innerHTML = '<span style="color: #FC6F35; font-weight: bold;"> Watch 1 video </span> to unlock spinning wheel & claim your gift!';
         }
-        else if (videosWatched == 2) {
-            watchLink.innerHTML = '<span style="color: #FC6F35; font-weight: bold;"> Watch 1 video </span> to spin the wheel!';
-        }
-        else if (videosWatched >= 3) {
-            watchLink.innerHTML = 'You‘ve unlocked the wheel! <span style="color: #FC6F35; font-weight: bold;">Spin it now!</span>';
-            watchLink.style.fontSize = '2.3vh';
+        else if (videosWatched >= 1) {
+            watchLinkPortrait.innerHTML = 'You‘ve unlocked the wheel! <span style="color: #FC6F35; font-weight: bold;"> Spin it now!</span>';
+            watchLinkLandscape.innerHTML = '<span style="color: #FC6F35; font-weight: bold; outline: 1vw #FC6F35">Spinning Wheel is now unlocked. </span> Claim your gift now!';
 
-            // Enable the link for clicking
-            watchLink.onclick = function () {
+            watchLinkPortrait.style.outline = "0.5vw solid #FC6F35";
+            watchLinkLandscape.style.outline = "0.5vw solid #FC6F35";
+
+            watchLinkPortrait.style.fontSize = '2.3vh';
+            watchLinkLandscape.style.fontSize = '3.5vh';
+
+            watchLinkPortrait.onclick = function () {
+                document.location = '@Url.Action("Index", "SpinWheel")';
+            };
+            watchLinkLandscape.onclick = function () {
                 document.location = '@Url.Action("Index", "SpinWheel")';
             };
         }
+
+        $('#signOutLink').click(function (e) {
+            e.preventDefault();
+
+            // Show loading overlay
+            $('#loadingOverlayItem').show();
+
+            // Get the sign-out URL
+            var signOutUrl = $(this).find('a').attr('href');
+
+            // Delay the redirection slightly to allow the loading overlay to show
+            setTimeout(function () {
+                // Redirect to the sign-out URL
+                window.location.href = signOutUrl;
+            }, 100);
+        });
+
+        var links = document.querySelectorAll("#watch-3-videos-link");
+
+        // Function to check orientation and update text accordingly
+        function updateText() {
+            if (window.innerWidth > window.innerHeight) {
+                // Show the landscape link
+                var landscapeLink = document.querySelector(".landscape");
+                landscapeLink.style.display = 'inline-block';
+
+                // Hide the portrait link
+                var portraitLink = document.querySelector(".portrait");
+                portraitLink.style.display = 'none';
+            } else {
+                // Show the portrait link
+                var portraitLink = document.querySelector(".portrait");
+                portraitLink.style.display = 'inline-block';
+
+                // Hide the landscape link
+                var landscapeLink = document.querySelector(".landscape");
+                landscapeLink.style.display = 'none';
+            }
+        }
+
+        updateText();
+
+        window.addEventListener("orientationchange", function () {
+            updateText();
+        });
+
     });
 
     let idleTime = 0;
     const idleTimeout = 300; // 5 minutes in seconds
-    const homePageUrl = "/Home/Index"; // Adjust the URL of your home page
+    const homePageUrl = "/Home/Index";
 
     const idleInterval = setInterval(timerIncrement, 1000);
 

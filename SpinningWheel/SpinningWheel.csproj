@@ -15,12 +15,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EnterName\" />
-    <Folder Include="Views\Main\" />
-    <Folder Include="wwwroot\videos\" />
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\css\icon.css" />
     <Content Remove="wwwroot\videos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\css\icon.css" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.15" />

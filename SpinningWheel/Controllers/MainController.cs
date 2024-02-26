@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using SpinningWheel.Data;
 using SpinningWheel.Models;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace SpinningWheel.Controllers
 {
     public class MainController : Controller
@@ -21,7 +19,6 @@ namespace SpinningWheel.Controllers
             _logger = logger;
         }
 
-        // GET: /<controller>/
         private static int videoWatched = 0;
 
         [HttpGet]
@@ -31,12 +28,14 @@ namespace SpinningWheel.Controllers
             DateTime today = DateTime.Today;
 
             var lastUser = HttpContext.Session.GetString("Name") ?? "There" ;
-            int userCountToday = _context.User.Count(u => u.CreatedDateTime == today);
+            var records = _context.User
+                .Where(u => u.CreatedDateTime.Date == today)
+                .ToList();
 
             var main = new Main
             {
                 user = lastUser,
-                userCount = _context.User.Count(),
+                userCount = records.Count(),
                 videoWatched = videoWatched
             };
 
@@ -44,11 +43,20 @@ namespace SpinningWheel.Controllers
             return View(main);
 
         }
+
         [HttpPost]
-        public ActionResult IncrementIndex()
+        public IActionResult IncrementIndex(string pageIdentifier)
         {
-            videoWatched++;
-            Console.WriteLine("hit api");
+            // Check if the page has been visited in the current session
+            var visitedPages = HttpContext.Session.GetString("VisitedPages") ?? "";
+            if (!visitedPages.Contains(pageIdentifier))
+            {
+                // Increment videoWatched
+                videoWatched++;
+
+                // Update visitedPages in session
+                HttpContext.Session.SetString("VisitedPages", $"{visitedPages},{pageIdentifier}");
+            }
 
             return RedirectToAction("Index");
         }
@@ -57,9 +65,6 @@ namespace SpinningWheel.Controllers
         {
             videoWatched = 0;
         }
-
-
-
         public IActionResult Automation()
         {
             return View();
@@ -80,7 +85,7 @@ namespace SpinningWheel.Controllers
             return View();
         }
 
-        public IActionResult JobBalancing()
+        public IActionResult Summary()
         {
             return View();
         }

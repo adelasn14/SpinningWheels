@@ -9,26 +9,81 @@
 
     <div id="main-item-text">
         <label>VA / VE</label>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>Material is the largest item in our COGS. Through research and development, as well as the exploration of new technologies without compromising the battery performance, we have conducted a Value Analysis/Value Engineering (VA/VE) on the GRID Casting production process, transforming it into the Expand Grid process [C-C to X-X].</p>
     </div>
 
-    <div>
-        <div id="ppt-watching-screen"></div>
+    <div id="media-menu-item">
+        <div id="ppt-watching-screen">
+            <img src="~/images/PPT-VAVE.jpeg" />
+        </div>
         <div id="video-watching-screen">
-            <video id="videoItem" src="~/videos/VideoCheck.mov" autoplay onended="updateIndex()"></video>
+            <video id="videoItem" autoplay loop>
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+                <source src="~/videos/Video-VAVE.mp4" type="video/mp4" />
+            </video>
         </div>
     </div>
 
     <div id="backBtn">
         <input id="backBtnText" type="submit" value="Back" />
     </div>
+
+    <div id="loadingOverlayItem">
+        <div id="spinner-container" class="d-flex justify-content-center align-items-center">
+            <div id="spinner-border-item" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="pptModal" class="modal">
+        <img alt="Image" />
+        <span class="close">&times;</span>
+    </div>
 </div>
 
 <script>
-    function updateIndex() {
+    $(function () {
+        document.getElementById('backBtn').classList.add('pulse');
+
+        $("#backBtn").click(function (e) {
+            $('#loadingOverlayItem').show();
+
+            e.preventDefault();
+            pauseVideo();
+
+            document.getElementById('backBtn').classList.remove('pulse');
+
+            setTimeout(function () {
+                document.getElementById('backBtn').classList.add('exit');
+
+                $('#loadingOverlayItem').hide();
+                document.location = '@Url.Action("Index", "Main")';
+            }, 700);
+        });
+
+        function pauseVideo() {
+            var videoItem = document.getElementById('videoItem');
+            videoItem.pause();
+        }
+
+        updateIndex("VAVE");
+        
+    });
+
+    function updateIndex(pageIdentifier) {
         $.ajax({
             type: "POST",
             url: "/Main/IncrementIndex",
+            data: { pageIdentifier: pageIdentifier },
             success: function (result) {
                 console.log("Video Watched!");
             },
@@ -38,45 +93,28 @@
         });
     }
 
-    $(function () {
-        document.getElementById('backBtn').classList.add('pulse');
+    // Popup Modal
+    var modalClass = document.querySelector(".modal");
+    var modal = document.getElementById("pptModal");
 
-        $("#backBtn").click(function (e) {
-            e.preventDefault();
-            pauseVideo();
+    var pptImage = document.querySelector("#ppt-watching-screen img");
+    var modalImg = document.querySelector("#pptModal img");
 
-            document.getElementById('backBtn').classList.remove('pulse');
-
-            setTimeout(function () {
-                document.getElementById('backBtn').classList.add('exit');
-
-                document.location = '@Url.Action("Index", "Main")';
-            }, 700);
-        });
-    });
-
-    function pauseVideo() {
-        var videoItem = document.getElementById('videoItem');
-        videoItem.pause();
+    pptImage.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
     }
 
-    let idleTime = 0;
-    const idleTimeout = 300; // 5 minutes in seconds
-    const homePageUrl = "/Home/Index"; // Adjust the URL of your home page
+    var span = document.querySelector(".close");
 
-    const idleInterval = setInterval(timerIncrement, 1000);
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
 
-    document.addEventListener('mousemove', resetIdleTime);
-    document.addEventListener('keydown', resetIdleTime);
-
-    function timerIncrement() {
-        idleTime++;
-        if (idleTime >= idleTimeout) {
-            window.location.href = homePageUrl;
+    modal.onclick = function (event) {
+        // Check if the click is directly on the modal, not on its children
+        if (event.target === modal) {
+            modal.style.display = "none";
         }
-    }
-
-    function resetIdleTime() {
-        idleTime = 0;
     }
 </script>

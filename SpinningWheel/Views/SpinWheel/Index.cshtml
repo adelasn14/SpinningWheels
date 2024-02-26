@@ -2,47 +2,81 @@
     Layout = "_SpinWheelLayout";
 }
 
-<div class="spin-wheel-container">
-    <div id="logo-gs">
-        <img src="~/images/Logo-GS Hitam.png" />
-    </div>
+<div id="refreshContainer">
+    <div id="refreshContent">
+        <div class="spin-wheel-desc">
+            <div id="logo-gs">
+                <img src="/images/Logo-GS Hitam.png" />
+            </div>
+            <div class="spin-option">
+                <div id="spin-wheel-text">
+                    <label>Spinning Wheel</label>
+                    <p>Spin the wheel to claim your gift.</p>
+                    <button id="spin-btn">PRESS TO SPIN</button>
+                </div>
 
-    <div id="spin-wheel-text">
-        <label>Spin the Wheel</label>
-        <p>Congratulations, you've unlocked "Spin the Wheel" where amazing prizes are up for grabs!</p>
-    </div>
-
-    <div class="wrapper">
-        <div class="container-spinwheel">
-            <canvas id="wheel"></canvas>
-            <button id="spin-btn">PRESS TO SPIN</button>
-            <span id="close">Back</span>
-            <img src="~/images/Icon-SpinWheel.png" alt="spinner-arrow" />
+                <span id="close">Back</span>
+            </div>
         </div>
-    </div>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <div class="confetti">
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
-                <div class="confetti-piece"></div>
+        <div class="spin-wheel-container">
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="confetti">
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                        <div class="confetti-piece"></div>
+                    </div>
+                    <div id="final-value"></div>
+                    <span class="close" id="closeBtn" onclick="closeModal()">Back</span>
+                </div>
             </div>
 
-            <img id="img-modal" src="~/images/Icon-SpinWheelModal.png" />
-            <div id="final-value"></div>
-            <span class="close" id="closeBtn" onclick="closeModal()"></span>
+            <div class="wrapper">
+                <div id="bg-spinwheel">
+                    <img src="~/images/Icon-Bg-SpinWheel.png"/>
+                </div>
+                <div class="container-spinwheel">
+                    <canvas id="wheel"></canvas>
+                    <img alt="spinner-arrow" src="/images/Icon-SpinWheel.png" />
+                    <img id="img-logo-spinner" src="~/images/Icon-Spinner.png" alt="gs-logo" />
+                </div>
+            </div>
+
+            <div id="loadingOverlayItem">
+                <div id="spinner-container" class="d-flex justify-content-center align-items-center">
+                    <div id="spinner-border-item" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+
+    <div id="refreshIndicator">
+        <span id="refreshIcon" class="glyphicon glyphicon-refresh"></span>
+        <span id="refreshText"></span>
     </div>
 </div>
 
@@ -54,20 +88,21 @@
 
     //Object that stores values of minimum and maximum angle for a value
     const rotationValues = [
-        //{ minDegree: 0, maxDegree: 60, value: 6 },
-        //{ minDegree: 61, maxDegree: 120, value: 5 },
-        //{ minDegree: 121, maxDegree: 180, value: "Gantungan Kunci" },
-        //{ minDegree: 181, maxDegree: 240, value: "Tumbler" },
-        //{ minDegree: 241, maxDegree: 270, value: "Pulpen" },
-        //{ minDegree: 271, maxDegree: 300, value: "Topi" },
-        //{ minDegree: 301, maxDegree: 360, value: "Topi" },
+        { minDegree: 0, maxDegree: 60, value: "Pouch bag" },
+        { minDegree: 61, maxDegree: 120, value: "Tumblr Lock&Lock" },
+        { minDegree: 121, maxDegree: 180, value: "Coba Lagi" },
+        { minDegree: 181, maxDegree: 240, value: "Tumbler" },
+        { minDegree: 241, maxDegree: 270, value: "Pen" },
+        { minDegree: 271, maxDegree: 300, value: "Pen" },
+        { minDegree: 301, maxDegree: 360, value: "Topi" },
 
+        /*
         { minDegree: 0, maxDegree: 30, value: "Zonk" },
-        { minDegree: 31, maxDegree: 60, value: 6 },
+        { minDegree: 31, maxDegree: 60, value: "Kulkas" },
         { minDegree: 61, maxDegree: 90, value: "Zonk" },
-        { minDegree: 91, maxDegree: 120, value: 5},
+        { minDegree: 91, maxDegree: 120, value: "Permen"},
         { minDegree: 121, maxDegree: 150, value: "Zonk" },
-        { minDegree: 151, maxDegree: 180, value: "Gantungan Kunci" },
+        { minDegree: 151, maxDegree: 180, value: "Ganci" },
         { minDegree: 181, maxDegree: 210, value: "Zonk" },
         { minDegree: 211, maxDegree: 240, value: "Tumbler" },
         { minDegree: 241, maxDegree: 270, value: "Zonk" },
@@ -76,49 +111,80 @@
         { minDegree: 316, maxDegree: 330, value: "Topi" },
         { minDegree: 331, maxDegree: 360, value: "Zonk" }
 
+        // 15 derajat 2 terbawah
+        { minDegree: 0, maxDegree: 30, value: "Zonk" },
+        { minDegree: 31, maxDegree: 60, value: "Kulkas" },
+        { minDegree: 61, maxDegree: 90, value: "Zonk" },
+        { minDegree: 91, maxDegree: 120, value: "Permen" },
+        { minDegree: 121, maxDegree: 150, value: "Zonk" },
+        { minDegree: 151, maxDegree: 180, value: "Ganci" },
+        { minDegree: 181, maxDegree: 210, value: "Zonk" },
+        { minDegree: 211, maxDegree: 240, value: "Tumbler" },
+        { minDegree: 241, maxDegree: 270, value: "Zonk" },
+        { minDegree: 271, maxDegree: 300, value: "Pulpen" },
+        { minDegree: 301, maxDegree: 330, value: "Zonk" },
+        { minDegree: 331, maxDegree: 345, value: "Topi" },
+        { minDegree: 346, maxDegree: 360, value: "Zonk" }
+
+        { minDegree: 0, maxDegree: 30, value: "Kulkas" },
+        { minDegree: 31, maxDegree: 60, value: "Zonk" },
+        { minDegree: 61, maxDegree: 90, value: "Zonk" },
+        { minDegree: 91, maxDegree: 120, value: "Permen" },
+        { minDegree: 121, maxDegree: 150, value: "Ganci" },
+        { minDegree: 151, maxDegree: 180, value: "Zonk" },
+        { minDegree: 181, maxDegree: 210, value: "Zonk" },
+        { minDegree: 211, maxDegree: 240, value: "Tumbler" },
+        { minDegree: 241, maxDegree: 270, value: "Pulpen" },
+        { minDegree: 271, maxDegree: 300, value: "Zonk" },
+        { minDegree: 301, maxDegree: 330, value: "Zonk" },
+        { minDegree: 331, maxDegree: 345, value: "Topi" },
+        { minDegree: 346, maxDegree: 360, value: "Kulkas" }
+        */
+
     ];
+    
     //Size of each piece
-    //const data = [16, 16, 16, 16, 16, 16];
-    const data = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
+    const data = [16, 16, 16, 16, 16, 16];
+    //const data = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
+    //const data = [8, 16, 8, 8, 16, 8, 8, 16, 8];
 
     //background color for each piece
     var pieColors = [
+        "#fd226a",
+        "#fc6f35",
         "#ffbd59",
-        "#ffde5a",
+        "#fd226a",
+        "#ff5757",
+        "#ffbd59"
     ];
+
     //Create chart
     let myChart = new Chart(wheel, {
         //Plugin for displaying text on pie chart
         plugins: [ChartDataLabels],
-        //Chart Type Pie
-        type: "pie",
+        type: "pie", // Chart Type Pie
         data: {
-            //Labels(values which are to be displayed on chart)
-            //labels: ["Topi", "Pulpen", "Tumbler", "Gantungan Kunci", 5, 6],
-            labels: ["Topi", "Zonk", "Pulpen", "Zonk", "Tumbler", "Zonk", "Gantungan Kunci", "Zonk", 5, "Zonk", 6, "Zonk"],
+            labels: ["Topi", "Pen", "Tumbler", "Coba Lagi", "Lock&Lock", "Pouch bag"],
+            //labels: ["Topi", "Zonk", "Pulpen", "Zonk", "Tumbler", "Zonk", "Ganci", "Zonk", "Permen", "Zonk", "Kulkas", "Zonk"],
+            //labels: ["Topi", "Zonk", "Pulpen", "Tumbler", "Zonk", "Ganci", "Permen", "Zonk", "Kulkas"],
+
             //Settings for dataset/pie
             datasets: [
                 {
                     backgroundColor: pieColors,
                     data: data,
-                    borderColor: ['red'],
-                    borderWidth: 20,
-                    borderCapStyle: 'butt',
-                    borderJoinStyle: 'miter',
+                    borderWidth: -10
                 },
             ],
         },
         options: {
-            //Responsive chart
-            responsive: true,
+            maintainAspectRatio: false,
             animation: { duration: 0 },
             plugins: {
-                //hide tooltip and legend
                 tooltip: false,
                 legend: {
                     display: false,
                 },
-                //display labels inside pie chart
                 datalabels: {
                     padding: 10,
                     rotation: (context) =>
@@ -126,14 +192,58 @@
                         360 / context.chart.data.labels.length / 2 +
                         270 +
                         context.chart.options.rotation,
-                    color: "#000000",
-                    formatter: (_, context) => context.chart.data.labels[context.dataIndex],
-                    font: {
-                        family: "Rubik", // Replace 'Your Desired Font' with the actual font name
-                        size: 70,
-                        weight: "bold", // You can use 'normal', 'bold', etc.
+                    color: '#FFFFFF',
+                    formatter: function (_, context) {
+                        const label = context.chart.data.labels[context.dataIndex];
+                        return label;
                     },
-                },
+                    font: function (context) {
+                        const label = context.chart.data.labels[context.dataIndex];
+
+                        if (window.innerWidth < 2160) {
+                            return {
+                                family: "Rubik",
+                                size: 25,
+                                weight: "bold",
+                            };
+                        } else {
+                            return {
+                                family: "Rubik",
+                                size: 70,
+                                weight: "bold",
+                            };
+                        }
+                    },
+                    anchor: (context) => {
+                        if (window.innerWidth < 2160) {
+                            return {
+                                anchor: 'center'
+                            };
+                        } else {
+                            return {
+                                anchor: 'center'
+                            };
+                        }
+                    },
+                    align: (context) => {
+                        if (window.innerWidth < 2160) {
+                            return {
+                                align: 'center'
+                            };
+                        } else {
+                            return {
+                                align: 'start'
+                            };
+                        }
+                    },
+                    offset: (context) => {
+                        if (window.innerWidth >= 2160) {
+                            return -260;
+                        } else {
+                            return 0; // or whatever value you want for smaller window widths
+                        }
+                    }
+                }
             },
         },
     });
@@ -143,44 +253,67 @@
             // if the angleValue is between min and max then display it
             if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
                 setTimeout(function () {
-                    if (i.value == "Zonk") {
-                        finalValue.innerHTML = `<p>Oops!</br></br></br></br></br></br> You got: </br> <span style="color: #FD226A;">${i.value}</span></p>`;
-                        closeBtn.innerHTML = `Try Again`;
-                    } else {
-                        finalValue.innerHTML = `<p>CONGRATULATIONS!</br></br></br></br></br></br> You win: </br> <span style="color: #FD226A;">${i.value}</span></p>`;
-                        closeBtn.innerHTML = `Back`;
+                    if (i.value == "Coba Lagi") {
+                        finalValue.innerHTML =
+                            `<div>
+                            <p id="congrats-spin">Oops...</p>
+                                <p id="win-spin">You got: </br> <p style="color: #FD226A">${i.value}</p> </p>
+                                <p id="thanks-spin">Please try again.</p>
+                        </div>`;
+                        closeBtn.innerHTML = 'Spin Again';
+
                     }
+                    else {
+                        finalValue.innerHTML =
+                            `<div>
+                            <p id="congrats-spin">CONGRATULATIONS</p>
+                                <p id="win-spin">You win: </br> <p style="color: #FD226A">${i.value}</p> </p>
+                                <p id="thanks-spin">Thank you for visiting our booth.</p>
+                        </div>`;
+                    }
+                    
                     spinBtn.disabled = false;
 
                     openModal();
-                }, 500); // 1000 milliseconds (1 second) delay
+                }, 700);
                 break;
             }
         }
     };
 
-
-    // Function to display the modal
     function openModal() {
         const modal = document.getElementById('myModal');
         modal.style.display = 'block';
     }
 
-    // Function to close the modal
     function closeModal() {
         const modal = document.getElementById('myModal');
         modal.style.display = 'none';
     }
 
-    //Spinner count
+    // Spinner count
     let count = 0;
-    //100 rotations for animation and last rotation for result
-    let resultValue = 101;
-    //Start spinning
+
+    // 81 rotations for animation and last rotation for result
+    let resultValue = 81;
+
+    var font = new FontFace('Rubik', ' url(https://fonts.gstatic.com/s/rubik/v28/iJWKBXyIfDnIV7nMrXyi0A.woff2)');
+    font.load().then(function (loadedFont) {
+        document.fonts.add(loadedFont);
+        // Font is loaded, initialize and render your chart
+        myChart.update();
+    }).catch(function (error) {
+        console.log('Font loading failed: ' + error);
+    });
+
+
+    // Start spinning
     spinBtn.addEventListener("click", () => {
         spinBtn.disabled = true;
+
         //Generate random degrees to stop at
         let randomDegree = Math.floor(Math.random() * (355 - 0 + 1) + 0);
+
         //Interval for rotation animation
         let rotationInterval = window.setInterval(() => {
             //Set rotation for piechart
@@ -188,8 +321,9 @@
             Initially to make the piechart rotate faster we set resultValue to 101 so it rotates 101 degrees at a time and this reduces by 1 with every count. Eventually on last rotation we rotate by 1 degree at a time.
             */
             myChart.options.rotation = myChart.options.rotation + resultValue;
-            //Update chart with new value;
+
             myChart.update();
+            
             //If rotation>360 reset it back to 0
             if (myChart.options.rotation >= 360) {
                 count += 1;
@@ -206,14 +340,57 @@
 
     $(function () {
         $("#close").click(function (e) {
+            $('#loadingOverlayItem').show();
             e.preventDefault();
+
             document.location = '@Url.Action("Index", "Main")';
         });
     });
 
+    $(document).ready(function () {
+        var startY;
+        var touchMoved = false;
+
+        $('#refreshContainer').on('touchstart', function (e) {
+            var touchobj = e.originalEvent.changedTouches[0];
+            startY = touchobj.clientY;
+            touchMoved = false;
+        });
+
+        $('#refreshContainer').on('touchmove', function (e) {
+            var touchobj = e.originalEvent.changedTouches[0];
+            var dist = touchobj.clientY - startY;
+
+            if (dist > 0) {
+                e.preventDefault();
+                touchMoved = true;
+
+                if (dist > 40) {
+                    $('#refreshIndicator').addClass('refreshing');
+                    $('#refreshText').text("Release to refresh");
+                } else {
+                    $('#refreshIndicator').removeClass('refreshing');
+                    $('#refreshText').text("");
+                }
+            }
+        });
+
+        $('#refreshContainer').on('touchend', function (e) {
+            if (touchMoved) {
+                if ($('#refreshIndicator').hasClass('refreshing')) {
+
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                }
+                $('#refreshIndicator').removeClass('refreshing');
+            }
+        });
+    });
+
     let idleTime = 0;
-    const idleTimeout = 300; // 5 minutes in seconds
-    const homePageUrl = "/Home/Index"; // Adjust the URL of your home page
+    const idleTimeout = 300;
+    const homePageUrl = "/Home/Index";
 
     const idleInterval = setInterval(timerIncrement, 1000);
 
@@ -231,4 +408,3 @@
         idleTime = 0;
     }
 </script>
-

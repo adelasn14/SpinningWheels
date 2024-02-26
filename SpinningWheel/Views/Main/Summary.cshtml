@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_MainItemLayout";
+}
+
+<div class="main-item-container">
+    <div id="logo-gs">
+        <img src="~/images/Logo-GS Hitam.png" />
+    </div>
+
+    <div id="media-menu-item-summary">
+        <div id="ppt-watching-screen">
+            <img src="~/images/PPT_Summary.jpeg" />
+        </div>
+    </div>
+
+    <div id="backBtn">
+        <input id="backBtnText" type="submit" value="Back" />
+    </div>
+
+    <div id="loadingOverlayItem">
+        <div id="spinner-container" class="d-flex justify-content-center align-items-center">
+            <div id="spinner-border-item" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        document.getElementById('backBtn').classList.add('pulse');
+
+        $("#backBtn").click(function (e) {
+            $('#loadingOverlayItem').show();
+
+            e.preventDefault();
+
+            document.getElementById('backBtn').classList.remove('pulse');
+
+            setTimeout(function () {
+                document.getElementById('backBtn').classList.add('exit');
+
+                $('#loadingOverlayItem').hide();
+                document.location = '@Url.Action("Index", "Main")';
+            }, 700);
+        });
+    });
+</script>
