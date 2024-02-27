@@ -2155,8 +2155,8 @@ body {
 
         .main-content-container #content-main {
             display: flex;
-            margin: 1vw;
-            margin-bottom: 3vh;
+            margin: 1vh 4vw;
+            margin-bottom: 2vh;
             flex-direction: row;
         }
 
@@ -2193,6 +2193,7 @@ body {
     .watch-3-videos-container {
         position: static;
         color: black;
+        display: flex;
         align-items: center;
         justify-content: center;
         flex: 2;
@@ -2261,7 +2262,7 @@ body {
     }
 
         .main-item-container #ppt-watching-screen img {
-            height: 215px;
+            height: 222px;
             width: 395px;
         }
 
@@ -2353,34 +2354,43 @@ body {
             display: inline-block;
         }
 
+    #bg-spinwheel img {
+        position: absolute;
+        bottom: -21%;
+        right: -82.5%;
+        width: 95vw;
+        height: auto;
+        z-index: -1;
+    }
+
     .wrapper {
         width: 90%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin: auto;
-        margin-top: 4vh;
+        margin: 0 auto;
     }
 
     .container-spinwheel {
         position: relative;
-        height: 63vh;
-        width: 76vw;
+        height: auto;
+        width: 40vw;
     }
 
         .container-spinwheel img {
             position: absolute;
             width: 4vw;
             top: -4%;
-            left: 47.5%;
+            left: 46%;
         }
 
         .container-spinwheel #img-logo-spinner {
             position: absolute;
-            width: 5vw;
-            top: 44%;
-            left: 46.9%;
+            width: 7vw;
+            height: auto;
+            top: 41%;
+            left: 41.9%;
             border-radius: 50%;
         }
 
